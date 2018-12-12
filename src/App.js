@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { observer } from "mobx-react";
+import Signup from "./forms/SignupForm";
+import Login from "./forms/LoginForm";
 
 // Components
 import Sidebar from "./Sidebar";
@@ -19,12 +21,16 @@ class App extends Component {
       return <Loading />;
     } else {
       return (
-        <Switch>
-          <Redirect exact from="/" to="/authors" />
-          <Route path="/authors/:authorID" component={AuthorDetail} />
-          <Route path="/authors/" component={AuthorsList} />
-          <Route path="/books/:bookColor?" component={BookList} />
-        </Switch>
+        <div>
+          <Signup />
+          <Switch>
+            <Redirect exact from="/" to="/authors" />
+            <Route path="/authors/:authorID" component={AuthorDetail} />
+            <Route path="/login" component={Login} />
+            <Route path="/authors/" component={AuthorsList} />
+            <Route path="/books/:bookColor?" component={BookList} />
+          </Switch>
+        </div>
       );
     }
   }
