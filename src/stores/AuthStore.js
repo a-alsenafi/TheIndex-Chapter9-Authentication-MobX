@@ -1,4 +1,4 @@
-import { decorate, observable, computed, action } from "mobx";
+import { decorate, observable } from "mobx";
 import axios from "axios";
 
 import jwt_decode from "jwt-decode";
@@ -10,7 +10,7 @@ class AuthStore {
 
   setAuthToken(token) {
     if (token) {
-      localStorage.setItem("treasureToken", token);
+      localStorage.setItem("loginToken", token);
       axios.defaults.headers.common.Authorization = `jwt ${token}`;
     } else {
       delete axios.defaults.headers.common.Authorization;
@@ -19,7 +19,7 @@ class AuthStore {
 
   checkForExpiredToken() {
     // Check for token expiration
-    const token = localStorage.treasureToken;
+    const token = localStorage.loginToken;
 
     if (token) {
       const currentTime = Date.now() / 1000;
@@ -41,12 +41,12 @@ class AuthStore {
 
   login(userData) {
     axios
-      .post("https://precious-things.herokuapp.com/login/", userData)
+      .post("https://the-index-api.herokuapp.com/login/", userData)
       .then(res => res.data)
       // For now just log user
       .then(user => {
         const decodedUser = jwt_decode(user.token);
-        console.log(decodedUser);
+        // console.log(decodedUser);
         this.setAuthToken(user.token);
         this.user = decodedUser;
       })
@@ -55,7 +55,7 @@ class AuthStore {
 
   signup(userData, history) {
     axios
-      .post("https://precious-things.herokuapp.com/signup/", userData)
+      .post("https://the-index-api.herokuapp.com/signup/", userData)
       .then(res => res.data)
       .then(user => {
         const decodedUser = jwt_decode(user.token);

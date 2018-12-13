@@ -10,10 +10,12 @@ import Loading from "./Loading";
 import AuthorsList from "./AuthorsList";
 import AuthorDetail from "./AuthorDetail";
 import BookList from "./BookList";
+import PrivateRoute from "./PrivateRoute";
 
 // Store
 import authorStore from "./stores/AuthorStore";
 import bookStore from "./stores/BookStore";
+import authStore from "./stores/AuthStore";
 
 class App extends Component {
   getView() {
@@ -22,11 +24,11 @@ class App extends Component {
     } else {
       return (
         <div>
-          <Signup />
           <Switch>
             <Redirect exact from="/" to="/authors" />
             <Route path="/authors/:authorID" component={AuthorDetail} />
-            <Route path="/login" component={Login} />
+            <PrivateRoute path="/login" component={Login} />
+            <PrivateRoute path="/signup" component={Signup} />
             <Route path="/authors/" component={AuthorsList} />
             <Route path="/books/:bookColor?" component={BookList} />
           </Switch>
